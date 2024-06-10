@@ -8,7 +8,9 @@ import background from './background.mp3'
 import correct from './correct.mp3'
 import wrong from './wrong.mp3'
 import over from './over.mp3'
+const speed = document.getElementById("speed") as HTMLInputElement
 
+let speedValue = parseFloat(speed.value)
 const allWords = [...adjective, ...nouns, ...verbs]
 
 // utility functions to get random words
@@ -42,6 +44,10 @@ bgSound.play()
 function randomBetween(min: number, max: number) {
   return Math.floor(Math.random() * (max - min + 1) + min)
 }
+
+speed.addEventListener("input", () => {
+  speedValue = parseFloat(speed.value)
+})
 
 let wordsLeft = 5;
 
@@ -94,7 +100,7 @@ let score = 0
 
 function loop(time = 0) {
   const delta = time - lastTime
-  if (delta > 2000) {
+  if (delta > (5000 / speedValue)) {
     lastTime = time
     const word = new Word(randomWord())
     words.push(word)
