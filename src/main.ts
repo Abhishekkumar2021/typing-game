@@ -169,16 +169,28 @@ function showScore() {
   }, 5000)
 }
 
+// This function checks and delete the first letter of the word if it matches the key pressed
+function isMatch(key: string) {
+  for(let i = 0; i < words.length; i++) {
+    if (words[i].text[0] === key) {
+      return i;
+    }
+  }
+  return -1;
+}
 
 window.addEventListener("keydown", (e) => {
   // User should be able to type the word to remove it
   const key = e.key
   if (words.length === 0) return
-  if (words[0].text[0] === key) {
+  const index = isMatch(key)
+  if (index !== -1) {
     // Play the correct sound
     const correctSound = new Audio(correct)
     correctSound.play()
-    words[0].text = words[0].text.slice(1)
+    
+    // Remove the first letter of the word
+    words[index].text = words[index].text.slice(1)
   } else {
     // Play the wrong sound
     const wrongSound = new Audio(wrong)
